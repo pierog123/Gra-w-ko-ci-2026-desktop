@@ -8,84 +8,103 @@ namespace Gra_w_kosci_2026_desktop
 {
     public partial class MainWindow : Window
     {
-        private int[] diceValues = new int[5];
-        private bool[] isDiceLocked = new bool[5];
-        private Random random = new Random();
-        private Image[] diceImages;
+        private readonly int[] dice = new int[5];
+        private readonly bool[] locked = new bool[5];
+        private readonly Image[] images;
+        private readonly Random rng = new Random();
 
         public MainWindow()
         {
             InitializeComponent();
 
-            diceImages = new Image[] { Dice0, Dice1, Dice2, Dice3, Dice4 };
-
-            ResetGame();
-        }
-        private void ResetGame()
-        {
-            for (int i = 0; i < 5; i++)
+            images = new Image[]
             {
-                diceValues[i] = 0;
-                isDiceLocked[i] = false;
-                UpdateDiceVisual(i, "kosc0.png", 1.0);
+                Dice0,
+                Dice1,
+                Dice2,
+                Dice3,
+                Dice4
+            };
+
+            NewGame();
+        }
+
+        private void NewGame()
+        {
+            for (int i = 0; i < dice.Length; i++)
+            {
+                dice[i] = 0;
+                locked[i] = false;
+
+                SetDiceImage(i, "kosc0.png");
+                images[i].Opacity = 1;
             }
+
             ResultTextBlock.Text = "0";
         }
 
         private void RollButton_Click(object sender, RoutedEventArgs e)
         {
-            int totalScore = 0;
+            int sum = 0;
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < dice.Length; i++)
             {
-
-                if (!isDiceLocked[i])
+                if (!locked[i])
                 {
-                    diceValues[i] = random.Next(1, 7);
-                    string imageName = $"kosc{diceValues[i]}.png";
-                    UpdateDiceVisual(i, imageName, 1.0);
+                    dice[i] = rng.Next(1, 7);
+                    SetDiceImage(i, $"kosc{dice[i]}.png");
                 }
 
-                totalScore += diceValues[i];
+                sum += dice[i];
             }
 
-            ResultTextBlock.Text = totalScore.ToString();
+            ResultTextBlock.Text = sum.ToString();
         }
 
         private void Dice_Click(object sender, MouseButtonEventArgs e)
         {
-            Image clickedImage = sender as Image;
-            if (clickedImage == null) return;
+            if (!(sender is Image selectedDice))
+                return;
 
-            int index = Convert.ToInt32(clickedImage.Tag);
+            int diceNumber = int.Parse(selectedDice.Tag.ToString());
 
-            if (diceValues[index] == 0) return;
+            if (dice[diceNumber] == 0)
+                return;
 
-            isDiceLocked[index] = !isDiceLocked[index];
+            locked[diceNumber] = !locked[diceNumber];
 
-            clickedImage.Opacity = isDiceLocked[index] ? 0.5 : 1.0;
+            if (locked[diceNumber])
+                selectedDice.Opacity = 0.45;
+            else
+                selectedDice.Opacity = 1.0;
         }
 
-        private void UpdateDiceVisual(int index, string filename, double opacity)
+        private void SetDiceImage(int number, string fileName)
         {
             try
             {
-                BitmapImage bitmap = new BitmapImage(new Uri($"pack://application:,,,/obrazy/{filename}", UriKind.RelativeOrAbsolute));
-                diceImages[index].Source = bitmap;
+                string path = $"pack://application:,,,/obrazy/{fileName}";
+
+                images[number].Source = new BitmapImage(
+                    new Uri(path, UriKind.Absolute));
             }
             catch
             {
                 try
                 {
-                    BitmapImage bitmap = new BitmapImage(new Uri(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "obrazy", filename), UriKind.Absolute));
-                    diceImages[index].Source = bitmap;
+                    string path = System.IO.Path.Combine(
+                        AppDomain.CurrentDomain.BaseDirectory,
+                        "obrazy",
+                        fileName);
+
+                    images[number].Source = new BitmapImage(
+                        new Uri(path, UriKind.Absolute));
                 }
                 catch
                 {
-
+                    images[number].Source = null;
                 }
             }
-            diceImages[index].Opacity = opacity;
         }
     }
 }

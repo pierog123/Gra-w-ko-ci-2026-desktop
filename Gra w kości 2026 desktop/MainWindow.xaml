@@ -3,10 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Gra_w_kosci_2026_desktop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+        Title="Gra w kości"
+        Height="450"
+        Width="800">
+
+    <Grid HorizontalAlignment="Center"
+          VerticalAlignment="Center">
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -14,21 +18,74 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
-            <Image x:Name="Dice0" Width="80" Height="80" Margin="10" MouseLeftButtonDown="Dice_Click" Tag="0" Cursor="Hand"/>
-            <Image x:Name="Dice1" Width="80" Height="80" Margin="10" MouseLeftButtonDown="Dice_Click" Tag="1" Cursor="Hand"/>
-            <Image x:Name="Dice2" Width="80" Height="80" Margin="10" MouseLeftButtonDown="Dice_Click" Tag="2" Cursor="Hand"/>
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+
+            <Image x:Name="Dice0"
+                   Width="80"
+                   Height="80"
+                   Margin="10"
+                   Tag="0"
+                   Cursor="Hand"
+                   MouseLeftButtonDown="Dice_Click"/>
+
+            <Image x:Name="Dice1"
+                   Width="80"
+                   Height="80"
+                   Margin="10"
+                   Tag="1"
+                   Cursor="Hand"
+                   MouseLeftButtonDown="Dice_Click"/>
+
+            <Image x:Name="Dice2"
+                   Width="80"
+                   Height="80"
+                   Margin="10"
+                   Tag="2"
+                   Cursor="Hand"
+                   MouseLeftButtonDown="Dice_Click"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
-            <Image x:Name="Dice3" Width="80" Height="80" Margin="10" MouseLeftButtonDown="Dice_Click" Tag="3" Cursor="Hand"/>
-            <Image x:Name="Dice4" Width="80" Height="80" Margin="10" MouseLeftButtonDown="Dice_Click" Tag="4" Cursor="Hand"/>
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+
+            <Image x:Name="Dice3"
+                   Width="80"
+                   Height="80"
+                   Margin="10"
+                   Tag="3"
+                   Cursor="Hand"
+                   MouseLeftButtonDown="Dice_Click"/>
+
+            <Image x:Name="Dice4"
+                   Width="80"
+                   Height="80"
+                   Margin="10"
+                   Tag="4"
+                   Cursor="Hand"
+                   MouseLeftButtonDown="Dice_Click"/>
         </StackPanel>
 
-        <Button Grid.Row="2" Content="RZUT" Background="#ED275021" Foreground="White" 
-                FontSize="20" FontWeight="Bold" Width="150" Height="50" Margin="10" Click="RollButton_Click"/>
+        <Button Grid.Row="2"
+                Content="RZUT"
+                Width="150"
+                Height="50"
+                Margin="10"
+                FontSize="20"
+                FontWeight="Bold"
+                Background="#ED275021"
+                Foreground="White"
+                Click="RollButton_Click"/>
 
-        <TextBlock Grid.Row="3" x:Name="ResultTextBlock" Text="0" FontSize="40" 
-                   HorizontalAlignment="Center" Margin="10" Foreground="Black"/>
+        <TextBlock Grid.Row="3"
+                   x:Name="ResultTextBlock"
+                   Text="0"
+                   FontSize="40"
+                   Foreground="Black"
+                   HorizontalAlignment="Center"
+                   Margin="10"/>
     </Grid>
+
 </Window>
